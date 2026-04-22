@@ -305,7 +305,7 @@ def generate_full_narrative(df):
     if problem_areas:
         text += "🔴 Key Problem Areas:\n"
 
-        for p in problem_areas[:3]:
+        for p in problem_areas:
 
             # Get column name
             col_name = [k for k,v in label_map.items() if v == p[0]][0]
@@ -354,7 +354,7 @@ def generate_full_narrative(df):
         if improvement_areas:
             text += "\n🟡 Improvement Opportunities:\n"
         
-            for i in improvement_areas[:3]:
+            for i in improvement_areas:
                 meaning = insight_map.get(i[0], "")
 
                 text += f"""
@@ -367,7 +367,7 @@ def generate_full_narrative(df):
     if strength_areas:
         text += "\n🟢 Strength Areas:\n"
         
-        for s in strength_areas[:3]:
+        for s in strength_areas:
             text += f"""
 - {s[0]} ({round(s[1],2)})
   💪 Strong performance, maintain this
