@@ -1,0 +1,71 @@
+Employee ID,My job responsibilities are clearly defined. ,My performance expectations are clearly defined and measurable. ,I know who has final decision-making authority on key tasks within my team. ,The boundaries between my responsibilities and others’ responsibilities are clearly defined. ,My manager communicates role expectations clearly and consistently. ,I understand how my role contributes to my team’s objectives. ,"When multiple tasks compete for attention, I know which priorities come first. ",Standard processes for completing key tasks are clearly defined. ,Changes to my role are communicated in a timely manner. ,Expectations between my team and other teams are clearly defined.,I have a clear understanding of how AI will impact my role or function.  ,I actively use AI tools to improve my day-to-day work efficiency.  ,I feel equipped with the skills required to work effectively alongside AI tools.  ,The organization provides sufficient guidance or support for adapting to AI-driven changes.  ,Uncertainty related to AI-driven changes increases my likelihood of considering opportunities outside the organization.  ,Which department do you belong to?,Which team or function are you part of? (Optional – short answer or dropdown),Who is your immediate reporting manager?  ,What is your current role level?  ,How long have you been with the organization?  
+E1,2,3,2,2,2,3,2,2,2,2,4,4,3,3,4,Engineering,Backend,M1,IC,1 to 3 Years
+E2,3,2,2,3,2,3,2,2,3,2,4,3,3,3,4,Engineering,Frontend,M1,IC,Less than 1 Year
+E3,2,2,2,2,2,3,2,2,2,2,4,4,3,3,4,Engineering,Backend,M1,IC,1 to 3 Years
+E4,3,3,3,2,3,3,3,3,3,2,4,4,4,3,4,Engineering,Frontend,M1,Manager,More than 3 Years
+E5,2,3,2,2,2,3,2,2,2,2,4,4,3,3,4,Engineering,Backend,M1,IC,1 to 3 Years
+E6,2,2,2,2,2,2,2,2,2,2,4,3,3,3,4,Engineering,Frontend,M1,IC,Less than 1 Year
+E7,3,3,2,2,3,3,2,2,3,2,4,4,3,3,4,Engineering,Backend,M1,IC,1 to 3 Years
+E8,3,3,3,3,3,3,3,3,3,3,4,4,4,3,4,Engineering,Frontend,M1,Manager,More than 3 Years
+E9,2,2,2,2,2,2,2,2,2,2,4,3,3,3,4,Engineering,Backend,M1,IC,Less than 1 Year
+E10,3,2,2,3,2,3,2,2,3,2,4,4,3,3,4,Engineering,Frontend,M1,IC,1 to 3 Years
+E11,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,Engineering,Backend,M2,IC,1 to 3 Years
+E12,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,Engineering,Frontend,M2,IC,Less than 1 Year
+E13,5,4,5,4,5,4,4,5,4,5,5,4,4,4,5,Engineering,Backend,M2,Manager,More than 3 Years
+E14,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,Engineering,Frontend,M2,IC,1 to 3 Years
+E15,4,3,4,4,4,4,4,4,4,4,4,4,4,3,4,Engineering,Backend,M2,IC,Less than 1 Year
+E16,5,4,5,4,5,4,4,5,4,5,5,4,4,4,5,Engineering,Frontend,M2,IC,1 to 3 Years
+E17,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,Engineering,Backend,M2,Manager,More than 3 Years
+E18,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,Engineering,Frontend,M2,IC,1 to 3 Years
+E19,4,3,4,4,4,4,4,4,4,4,4,4,4,3,4,Engineering,Backend,M2,IC,Less than 1 Year
+E20,5,4,5,4,5,4,4,5,4,5,5,4,4,4,5,Engineering,Frontend,M2,IC,1 to 3 Years
+E21,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,Sales,Inside Sales,M3,IC,1 to 3 Years
+E22,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,Sales,Field Sales,M3,IC,Less than 1 Year
+E23,5,4,5,4,5,4,4,5,4,5,3,3,3,3,3,Sales,Inside Sales,M3,Manager,More than 3 Years
+E24,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,Sales,Field Sales,M3,IC,1 to 3 Years
+E25,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,Sales,Inside Sales,M3,IC,Less than 1 Year
+E26,5,4,5,4,5,4,4,5,4,5,3,3,3,3,3,Sales,Field Sales,M3,IC,1 to 3 Years
+E27,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,Sales,Inside Sales,M3,Manager,More than 3 Years
+E28,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,Sales,Field Sales,M3,IC,1 to 3 Years
+E29,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,Sales,Inside Sales,M3,IC,Less than 1 Year
+E30,5,4,5,4,5,4,4,5,4,5,3,3,3,3,3,Sales,Field Sales,M3,IC,1 to 3 Years
+E31,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,Sales,Inside Sales,M3,IC,1 to 3 Years
+E32,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,Sales,Field Sales,M3,IC,Less than 1 Year
+E33,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,Marketing,Digital Marketing,M4,IC,1 to 3 Years
+E34,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,Marketing,Content Marketing,M4,IC,Less than 1 Year
+E35,4,3,4,3,4,3,3,4,3,4,3,3,3,3,3,Marketing,Digital Marketing,M4,Manager,More than 3 Years
+E36,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,Marketing,Content Marketing,M4,IC,1 to 3 Years
+E37,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,Marketing,Digital Marketing,M4,IC,Less than 1 Year
+E38,4,3,4,3,4,3,3,4,3,4,3,3,3,3,3,Marketing,Content Marketing,M4,IC,1 to 3 Years
+E39,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,Marketing,Digital Marketing,M4,Manager,More than 3 Years
+E40,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,Marketing,Content Marketing,M4,IC,1 to 3 Years
+E41,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,Marketing,Digital Marketing,M4,IC,Less than 1 Year
+E42,4,3,4,3,4,3,3,4,3,4,3,3,3,3,3,Marketing,Content Marketing,M4,IC,1 to 3 Years
+E43,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,Marketing,Digital Marketing,M4,IC,1 to 3 Years
+E44,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,Marketing,Content Marketing,M4,IC,Less than 1 Year
+E45,3,3,2,3,3,3,2,3,3,2,4,4,4,3,4,Product,Product Management,M5,IC,1 to 3 Years
+E46,3,2,2,3,3,3,2,3,3,2,4,4,3,3,4,Product,Product Operations,M5,IC,Less than 1 Year
+E47,3,3,3,3,3,3,3,3,3,3,4,4,4,3,4,Product,Product Management,M5,Manager,More than 3 Years
+E48,3,3,2,3,3,3,2,3,3,2,4,4,4,3,4,Product,Product Operations,M5,IC,1 to 3 Years
+E49,2,2,2,3,2,3,2,2,3,2,4,4,3,3,4,Product,Product Management,M5,IC,Less than 1 Year
+E50,3,3,3,3,3,3,3,3,3,3,4,4,4,3,4,Product,Product Operations,M5,IC,1 to 3 Years
+E51,3,3,3,3,3,3,3,3,3,3,4,4,4,3,4,Product,Product Management,M5,Manager,More than 3 Years
+E52,3,3,2,3,3,3,2,3,3,2,4,4,3,3,4,Product,Product Operations,M5,IC,1 to 3 Years
+E53,2,2,2,3,2,3,2,2,3,2,4,4,3,3,4,Product,Product Management,M5,IC,Less than 1 Year
+E54,3,3,3,3,3,3,3,3,3,3,4,4,4,3,4,Product,Product Operations,M5,IC,1 to 3 Years
+E55,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,Finance,Accounting,M6,IC,1 to 3 Years
+E56,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,Finance,FP&A,M6,IC,Less than 1 Year
+E57,5,4,5,4,5,4,4,5,4,5,5,4,4,4,5,Finance,Accounting,M6,Manager,More than 3 Years
+E58,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,Finance,FP&A,M6,IC,1 to 3 Years
+E59,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,Finance,Accounting,M6,IC,Less than 1 Year
+E60,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,Finance,FP&A,M6,IC,1 to 3 Years
+E61,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,HR,Talent Acquisition,M6,IC,1 to 3 Years
+E62,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,HR,HR Operations,M6,IC,Less than 1 Year
+E63,5,4,5,4,5,4,4,5,4,5,3,3,3,3,3,HR,Talent Acquisition,M6,Manager,More than 3 Years
+E64,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,HR,HR Operations,M6,IC,1 to 3 Years
+E65,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,HR,Talent Acquisition,M6,IC,Less than 1 Year
+E66,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,HR,HR Operations,M6,IC,1 to 3 Years
+E67,5,4,5,4,5,4,4,5,4,5,3,3,3,3,3,HR,Talent Acquisition,M6,Manager,More than 3 Years
+E68,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,HR,HR Operations,M6,IC,1 to 3 Years
+E69,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,HR,Talent Acquisition,M6,IC,Less than 1 Year
+E70,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,HR,HR Operations,M6,IC,1 to 3 Years
