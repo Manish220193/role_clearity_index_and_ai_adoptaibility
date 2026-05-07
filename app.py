@@ -276,6 +276,7 @@ def segment_overall(df):
     return strong, mixed, weak
 
 # Generate narrative
+
 def generate_full_narrative(df):
 
     problem_areas = []
@@ -287,90 +288,105 @@ def generate_full_narrative(df):
         label = label_map[col]
         category = classify_score(avg)
 
-        risk_count = len(df[df[f"{col}_Category"].isin(["Risk","Critical"])])
-        total = len(df)
+        risk_count = len(
+            df[df[f"{col}_Category"].isin(["Risk", "Critical"])]
+        )
 
-        # Better logic (important fix)
-        if risk_count / total > 0.2:
+        total = len(df)
+        risk_percent = risk_count / total
+
+        # Problem logic
+        if risk_percent >= 0.20:
             problem_areas.append((label, avg, risk_count))
+
         elif category == "Good":
             improvement_areas.append((label, avg))
-        else:
+
+        elif category == "Excellent":
             strength_areas.append((label, avg))
+
 
     text = "🧠 Organizational Insight Report\n\n"
 
-    # 🔴 Problems
-    # 🔴 Problems
+    # -------------------------
+    # Problem Areas
+    # -------------------------
     if problem_areas:
-        text += "🔴 Key Problem Areas:\n"
+        text += "🔴 Key Problem Areas:\n\n"
 
         for p in problem_areas:
 
-            # Get column name
-            col_name = [k for k,v in label_map.items() if v == p[0]][0]
+            # get actual column name
+            col_name = [k for k, v in label_map.items() if v == p[0]][0]
 
-             # 👉 Affected employees (weak in this parameter)
-            affected_df = df[df[f"{col_name}_Category"].isin(["Risk","Critical"])]
+            affected_df = df[
+                df[f"{col_name}_Category"].isin(["Risk", "Critical"])
+            ]
+
             affected_count = len(affected_df)
             total_count = len(df)
 
-            # 👉 Segment affected employees
-            if affected_count > 0:
-                strong_a, mixed_a, weak_a = segment_overall(affected_df)
+            affected_percent = round(
+                (affected_count / total_count) * 100, 1
+            )
+
+            # severity logic
+            if affected_percent >= 60:
+                severity = "High Priority"
+            elif affected_percent >= 35:
+                severity = "Medium Priority"
             else:
-                strong_a, mixed_a, weak_a = 0, 0, 0
+                severity = "Low Priority"
 
-            # 👉 Segment total population
-            strong_t, mixed_t, weak_t = segment_overall(df)
-
-            # Insight maps
             meaning = insight_map.get(p[0], "")
-            impact = impact_map.get(p[0], "")
             root = logic_map.get(p[0], "")
+            impact = impact_map.get(p[0], "")
 
             text += f"""
 - {p[0]} ({round(p[1],2)})
 
-    👥 Affected Employees: {affected_count} / {total_count}
+  👥 Affected Employees: {affected_count}/{total_count} ({affected_percent}%)
 
-    🔎 Within affected employees:
-    - {strong_a} → Strong overall but weak here
-    - {mixed_a} → Mixed performers
-    - {weak_a} → Consistently underperforming
+  🚨 Severity: {severity}
 
-    📊 Overall population:
-    - {strong_t} → Strong
-    - {mixed_t} → Mixed
-    - {weak_t} → Weak
-
-    👉 {meaning}
-    💡 Root Cause: {root}
-    📉 Impact: {impact}
-    """
-    else:
-        text += "🟢 No critical problem areas detected\n"
-        # 🟡 Improvements
-        if improvement_areas:
-            text += "\n🟡 Improvement Opportunities:\n"
-        
-            for i in improvement_areas:
-                meaning = insight_map.get(i[0], "")
-
-                text += f"""
-- {i[0]} ({round(i[1],2)})
   👉 {meaning}
-  🚀 Can be improved to excellence
+  💡 Root Cause: {root}
+  📉 Impact: {impact}
+
 """
 
-    # 🟢 Strengths
+    else:
+        text += "🟢 No critical problem areas detected\n\n"
+
+
+    # -------------------------
+    # Improvement Areas
+    # -------------------------
+    if improvement_areas:
+        text += "🟡 Improvement Opportunities:\n\n"
+
+        for i in improvement_areas:
+            meaning = insight_map.get(i[0], "")
+
+            text += f"""
+- {i[0]} ({round(i[1],2)})
+  👉 {meaning}
+  🚀 Can be improved further
+
+"""
+
+
+    # -------------------------
+    # Strength Areas
+    # -------------------------
     if strength_areas:
-        text += "\n🟢 Strength Areas:\n"
-        
+        text += "🟢 Strength Areas:\n\n"
+
         for s in strength_areas:
             text += f"""
 - {s[0]} ({round(s[1],2)})
   💪 Strong performance, maintain this
+
 """
 
     return text
