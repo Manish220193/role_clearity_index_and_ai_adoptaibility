@@ -396,8 +396,13 @@ def generate_full_narrative(df):
 # =========================
 
 
+tab1, tab2, tab3, tab4 = st.tabs([
+    "📊 Basic Analysis",
+    "🔍 Detailed Analysis",
+    "🚨 Critical Analysis",
+    "🛠  Targetted Analysis"
+])
 
-tab1, tab2 = st.tabs(["📊 Basic Analysis", "🔍 Detailed Analysis"])
 # --------------------------
 #Inteventions
 # --------------------------
@@ -575,7 +580,7 @@ impact_map = {
 }
 with tab2:
     st.subheader("🔍 Detailed Analysis")
-    st.info("Coming Soon 🚧")
+
     st.subheader("📊 Parameter Level Breakdown")
 
     param_means = pd.DataFrame({
@@ -604,28 +609,51 @@ with tab2:
     st.subheader("📊 Benchmark Distribution Overview")
 
     col1, col2 = st.columns(2)
-
+    
+    color_map = {
+        "Excellent": "#2E86DE",   # Blue
+        "Good": "#27AE60",        # Green
+        "Risk": "#F39C12",        # Orange
+        "Critical": "#E74C3C"     # Red
+    }
     # RCI Pie
     with col1:
         rci_dist = filtered_df["RCI"].apply(classify_score).value_counts()
+
+        labels = rci_dist.index.tolist()
+        values = rci_dist.values.tolist()
+
         fig_rci = go.Figure(data=[go.Pie(
-            labels=rci_dist.index,
-            values=rci_dist.values,
-            hole=0.4
+            labels=labels,
+            values=values,
+            hole=0.4,
+            marker=dict(
+                colors=[color_map[label] for label in labels]
+            )
         )])
+
         fig_rci.update_layout(title="RCI Distribution")
         st.plotly_chart(fig_rci)
 
     # AI Pie
     with col2:
         ai_dist = filtered_df["AI_Adaptability"].apply(classify_score).value_counts()
+
+        labels = ai_dist.index.tolist()
+        values = ai_dist.values.tolist()
+
         fig_ai = go.Figure(data=[go.Pie(
-            labels=ai_dist.index,
-            values=ai_dist.values,
-            hole=0.4
+            labels=labels,
+            values=values,
+            hole=0.4,
+            marker=dict(
+                colors=[color_map[label] for label in labels]
+            )
         )])
+
         fig_ai.update_layout(title="AI Adaptability Distribution")
         st.plotly_chart(fig_ai)
+    
 
     st.subheader("🔍 Deep Dive into Parameter")
 
@@ -636,18 +664,27 @@ with tab2:
 
     col_name = param_map[selected_param]
     category_col = f"{col_name}_Category"
-
+    
     param_dist = filtered_df[category_col].value_counts()
 
+    labels = param_dist.index.tolist()
+    values = param_dist.values.tolist()
+
     fig_param = go.Figure(data=[go.Pie(
-        labels=param_dist.index,
-        values=param_dist.values,
-        hole=0.4
+        labels=labels,
+        values=values,
+        hole=0.4,
+        marker=dict(
+            colors=[color_map[label] for label in labels]
+        )
     )])
 
-    fig_param.update_layout(title=f"{selected_param} Distribution")
+    fig_param.update_layout(
+        title=f"{selected_param} Distribution"
+    )
 
     st.plotly_chart(fig_param)
+    
     
     # =========================
     # SMART NARRATIVE OUTPUT
@@ -659,3 +696,119 @@ with tab2:
     insight_text = generate_full_narrative(filtered_df)
     st.info(insight_text)
     
+with tab3:
+    st.subheader("🚨 Manager Risk Analysis")
+
+    # ------------------------
+    # Manager Level Analysis
+    # ------------------------
+    manager_analysis = filtered_df.groupby("Manager").agg({
+        "Expectation_Clarity":"mean",
+        "Authority_Clarity":"mean",
+        "Manager_Effectiveness":"mean",
+        "Execution_Clarity":"mean",
+        "Cross_Function":"mean",
+        "RCI":"mean"
+    }).reset_index()
+
+    st.write("### Manager Performance Table")
+    st.dataframe(
+        manager_analysis.sort_values("RCI")
+    )
+
+    # ------------------------
+    # Highest Risk Manager
+    # ------------------------
+    weakest_manager = manager_analysis.loc[
+        manager_analysis["RCI"].idxmin()
+    ]
+
+    st.error(
+        f"""
+        Highest Risk Manager: {weakest_manager['Manager']}
+        
+        RCI Score: {round(weakest_manager['RCI'],2)}
+        """
+    )
+
+    # ------------------------
+    # Team Analysis
+    # ------------------------
+    team_analysis = filtered_df.groupby("Team").agg({
+        "RCI":"mean",
+        "AI_Adaptability":"mean"
+    }).reset_index()
+
+    st.write("### Team Level Analysis")
+    st.dataframe(
+        team_analysis.sort_values("RCI")
+    )
+
+    # ------------------------
+    # Team vs Systemic Issue
+    # ------------------------
+    low_teams = team_analysis[
+        team_analysis["RCI"] < 3.5
+    ]
+
+    if len(low_teams) == 1:
+        st.warning(
+            "Issue appears team-specific. Likely local leadership/process issue."
+        )
+
+    elif len(low_teams) > 1:
+        st.error(
+            "Multiple teams affected. This appears to be department-wide/systemic."
+        )
+
+    else:
+        st.success(
+            "No major team-level role clarity issues detected."
+        )
+
+    # ------------------------
+    # Leadership Recommendations
+    # ------------------------
+    st.subheader("🛠 Leadership Recommendation")
+
+    if weakest_manager["Manager_Effectiveness"] < 3.5:
+        st.write("✅ Conduct manager coaching intervention")
+
+    if weakest_manager["Expectation_Clarity"] < 3.5:
+        st.write("✅ Redesign role expectations/KRAs")
+
+    if weakest_manager["Execution_Clarity"] < 3.5:
+        st.write("✅ Improve SOP/process clarity")
+
+    if weakest_manager["Cross_Function"] < 3.5:
+        st.write("✅ Improve cross-functional alignment")
+    
+    if weakest_manager["Authority_Clarity"] < 3.5:
+        
+        st.write("✅ Define decision ownership using RACI framework")
+
+    # ------------------------
+    # Heatmap
+    # ------------------------
+    import plotly.express as px
+
+    heatmap_df = manager_analysis.set_index("Manager")
+
+    fig = px.imshow(
+        heatmap_df[
+            [
+                "Expectation_Clarity",
+                "Authority_Clarity",
+                "Manager_Effectiveness",
+                "Execution_Clarity",
+                "Cross_Function"
+            ]
+        ],
+        text_auto=True,
+        title="Manager Risk Heatmap"
+    )
+
+    st.plotly_chart(fig)
+    with tab4:
+        st.subheader("🛠 Targetted Analysis")
+        
