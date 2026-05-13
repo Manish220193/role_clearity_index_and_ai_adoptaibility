@@ -47,6 +47,16 @@ def classify_score(score):
     else:
         return "Critical"
 
+def classify_ai_risk(score):
+    if score >= 4.2:
+        return "Critical"
+    elif score >= 3.5:
+        return "Risk"
+    elif score >= 2.8:
+        return "Good"
+    else:
+        return "Excellent"
+
 # Insight
 def combined_insight(rci, ai):
     if rci >= 3.5 and ai >= 3.5:
@@ -54,6 +64,7 @@ def combined_insight(rci, ai):
     elif rci >= 3.5 and ai < 3.5:
         return "Needs AI Training"
     elif rci < 3.5 and ai >= 3.5:
+
         return "Needs Role Clarity"
     else:
         return "Needs Role + AI Intervention"
@@ -184,14 +195,25 @@ if selected_team != "All":
 filtered_df = filtered_df.copy()
 
 # Create category columns for all parameters
-for col in [
-    "RCI","AI_Adaptability",
-    "Expectation_Clarity","Authority_Clarity","Manager_Effectiveness",
-    "Execution_Clarity","Cross_Function",
-    "AI_Clarity","AI_Usage","AI_Capability","AI_Support","AI_Risk"
-]:
+normal_cols = [
+    "RCI",
+    "AI_Adaptability",
+    "Expectation_Clarity",
+    "Authority_Clarity",
+    "Manager_Effectiveness",
+    "Execution_Clarity",
+    "Cross_Function",
+    "AI_Clarity",
+    "AI_Usage",
+    "AI_Capability",
+    "AI_Support"
+]
+
+for col in normal_cols:
     filtered_df[f"{col}_Category"] = filtered_df[col].apply(classify_score)
 
+# AI Risk uses reverse logic
+filtered_df["AI_Risk_Category"] = filtered_df["AI_Risk"].apply(classify_ai_risk)
 st.markdown("---")
 
 #Create parameter list
@@ -809,6 +831,132 @@ with tab3:
     )
 
     st.plotly_chart(fig)
-    with tab4:
-        st.subheader("🛠 Targetted Analysis")
+
+with tab4:
+    st.subheader("🚨 Employee Flight Risk Analysis")
+    with st.expander("ℹ️ How Flight Risk is Calculated"):
+        st.write("""
+    We identify potential flight-risk employees using a combined workforce stress model.
+
+    An employee is flagged when:
+
+    ✅ Role Clarity Index (RCI) is below benchmark (< 3.5)
+    → Indicates role confusion, unclear expectations, or execution friction.
+
+    ✅ AI Adaptability is below benchmark (< 3.5)
+    → Indicates low readiness to adapt to AI-driven workflows.
+
+    ✅ AI Risk/Anxiety is high (≥ 3.5)
+    → Indicates fear, uncertainty, or resistance toward AI adoption.
+
+    ### Why this matters:
+    When employees simultaneously experience:
+
+    - unclear roles
+    - low future readiness
+    - high AI anxiety
+
+    they may feel insecure about their career path, leading to disengagement or potential attrition risk.
+
+    This model helps HR teams proactively identify employees who may need:
+    - role clarity interventions
+    - AI upskilling
+    - manager support
+    - retention conversations
+    """)
+
+    # -------------------------
+    # Flight Risk Logic
+    # -------------------------
+    flight_risk_df = filtered_df[
+        (filtered_df["RCI"] < 3.5) &
+        (filtered_df["AI_Adaptability"] < 3.5) &
+        (filtered_df["AI_Risk"] >= 3.5)
+    ]
+
+    st.write("### High Flight Risk Employees")
+
+    if len(flight_risk_df) > 0:
+        st.dataframe(
+            flight_risk_df[
+                [
+                    "Employee",
+                    "Department",
+                    "Team",
+                    "Manager",
+                    "Role_Level",
+                    "Tenure",
+                    "RCI",
+                    "AI_Adaptability",
+                    "AI_Risk"
+                ]
+            ].sort_values("AI_Risk", ascending=False)
+        )
+
+    else:
+        st.success("No high flight-risk employees detected.")
+
+    # -------------------------
+    # Tenure Analysis
+    # -------------------------
+    st.subheader("📅 Tenure Risk Analysis")
+
+    tenure_analysis = filtered_df.groupby("Tenure").agg({
+        "RCI":"mean",
+        "AI_Adaptability":"mean",
+        "AI_Risk":"mean"
+    }).reset_index()
+
+    st.dataframe(tenure_analysis)
+
+    highest_risk_tenure = tenure_analysis.loc[
+        tenure_analysis["AI_Risk"].idxmax()
+    ]
+
+    st.warning(
+        f"""
+        Highest AI anxiety observed in:
+        {highest_risk_tenure['Tenure']}
         
+        AI Risk Score: {round(highest_risk_tenure['AI_Risk'],2)}
+        """
+    )
+
+    # -------------------------
+    # Role Level Analysis
+    # -------------------------
+    st.subheader("👔 Role Level Analysis")
+
+    role_analysis = filtered_df.groupby("Role_Level").agg({
+        "RCI":"mean",
+        "AI_Adaptability":"mean",
+        "AI_Risk":"mean"
+    }).reset_index()
+
+    st.dataframe(role_analysis)
+
+    # -------------------------
+    # AI Intervention Recommendation
+    # -------------------------
+    st.subheader("🤖 AI Intervention Recommendation")
+
+    avg_ai_clarity = filtered_df["AI_Clarity"].mean()
+    avg_ai_usage = filtered_df["AI_Usage"].mean()
+    avg_ai_capability = filtered_df["AI_Capability"].mean()
+    avg_ai_support = filtered_df["AI_Support"].mean()
+    avg_ai_risk = filtered_df["AI_Risk"].mean()
+
+    if avg_ai_clarity < 3.5:
+        st.write("✅ Conduct AI awareness sessions")
+
+    if avg_ai_usage < 3.5:
+        st.write("✅ Improve AI adoption through workflow integration")
+
+    if avg_ai_capability < 3.5:
+        st.write("✅ Launch AI upskilling programs")
+
+    if avg_ai_support < 3.5:
+        st.write("✅ Provide better AI tools/resources")
+
+    if avg_ai_risk >= 3.5:
+        st.write("✅ HR should monitor attrition risk and create retention plans")
